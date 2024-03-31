@@ -2,10 +2,10 @@
 I am looking to see if there is anyone available to create a computerized report card program. This is for a highschool to keep things more efficient. 
 
 ## Spec
-The full spec is included in the repo in the file called Reportcard.txt
+The full spec is included in the repo in the file called spec.txt
 
 ## Deliverables 
-The 3 files llsted below are required to implement the requirements for this repo. The info for each one is included in the spec.
+The 3 files listed below are required to be implemented for this repo. The info for each one is included in the spec.
 1. table.sql (create database and table)
 2. sampledata.sql
 3. reports.sql
