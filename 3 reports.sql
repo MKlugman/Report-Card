@@ -20,18 +20,18 @@ select top 4
 	r.LastName, 
 	r.Grade, 
 	r.ClassroomNumber, 
-	GeneralAvg = ((MathScore + ScienceScore + HistoryScore + EnglishScore) / 4), 
+	AvgScore,
 	r.MathScore, 
 	r.ScienceScore, 
 	r.HistoryScore, 
 	r.EnglishScore
 from ReportCard r
 where r.ConductScore = 'S+'
-order by GeneralAvg desc
+order by AvgScore desc
 
 	--4) We like to see if a student's age affects how she performs academically. 
 	--    Please list within each grade(9-12) all students sorted by Birthday(oldest on top), and then average of all test scores. 
-select r.FirstName, r.LastName, r.Grade, r.ClassroomNumber, r.DateBorn, GeneralAvg = ((MathScore + ScienceScore + HistoryScore + EnglishScore) / 4)
+select r.FirstName, r.LastName, r.Grade, r.ClassroomNumber, r.DateBorn, AvgScore
 from ReportCard r
 order by r.Grade, r.DateBorn
 
@@ -50,8 +50,9 @@ where r.Grade in(9, 10)
 
 --6) We want to keep an eye on any student who has an average below 70. 
 --    Please list those students with all info and test scores sorted by grade (9-12)
-select r.FirstName, r.LastName, r.DateBorn, r.Address, r.Grade, r.ClassroomNumber, GeneralAvg = ((MathScore + ScienceScore + HistoryScore + EnglishScore) / 4), r.MathScore, r.ScienceScore, r.HistoryScore, r.EnglishScore, r.GymScore, r.ConductScore
+select r.FirstName, r.LastName, r.DateBorn, r.Address, r.Grade, r.ClassroomNumber, AvgScore, r.MathScore, r.ScienceScore, r.HistoryScore, r.EnglishScore, r.GymScore, r.ConductScore
 from ReportCard r
-where ((MathScore + ScienceScore + HistoryScore + EnglishScore) / 4) < 70
+where AvgScore < 70
 order by r.Grade
+
 
