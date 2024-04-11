@@ -10,8 +10,8 @@ create table dbo.ReportCard(
 		constraint ck_ReportCard_StudentLastName_cannot_be_blank check(LastName > ''),
 	DateBorn date not null 
 		constraint ck_ReportCard_DateBorn_cannot_be_in_the_future check(DateBorn < getdate()),
-	PhoneNumber varchar(15) not null 
-		constraint ck_ReportCard_PhoneNumber_cannot_be_blank check(PhoneNumber > ''),
+	PhoneNumber char(10) not null 
+		constraint ck_ReportCard_PhoneNumber_must_be_numeric check(isnumeric(PhoneNumber) = 1),
 	Address varchar(30) not null 
 		constraint ck_ReportCard_Address_cannot_be_blank check(Address > ''),
 	Grade int not null 
@@ -29,7 +29,7 @@ create table dbo.ReportCard(
 		constraint ck_ReportCard_GymScore_must_be_either_s_s_plus_s_minus check(GymScore in('S', 'S+', 'S-')),
 	ConductScore varchar(2) not null 
 		constraint ck_ReportCard_ConductScore_must_be_either_s_s_plus_s_minus check(ConductScore in('S', 'S+', 'S-')),
-	--AvgScore as ((MathScore + ScienceScore + HistoryScore + EnglishScore) / 4),
+	AvgScore as ((MathScore + ScienceScore + HistoryScore + EnglishScore) / 4) persisted,
 	GeneralProgress as 
 		case 
 			when ((MathScore + ScienceScore + HistoryScore + EnglishScore) / 4)  between 90 and 100 then 'Doing very well!'
@@ -37,7 +37,7 @@ create table dbo.ReportCard(
 			when ((MathScore + ScienceScore + HistoryScore + EnglishScore) / 4) between 70 and 79 then 'Satisfactory work!'
 			when ((MathScore + ScienceScore + HistoryScore + EnglishScore) / 4) between 60 and 69 then 'Passing'
 			else 'Tutoring is necessary to ensure diploma'
-		end,	
+		end persisted,	
 	DateInserted datetime not null default getdate(),
 	constraint ck_ReportCard_ClassroomNumber_Grade check(
 		(Grade = 9 and ClassroomNumber in(101, 108)) or 
